@@ -18,6 +18,7 @@ if(($page_name == 'dashboard.php')){
 <head>
 <meta charset="utf-8">
 <title>Health care Application</title>
+
 <link rel="stylesheet" type="text/css" href="css/doctor_profile.css"/>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <script src="//code.jquery.com/jquery-1.9.1.js"></script>
@@ -41,29 +42,39 @@ if(($page_name == 'dashboard.php')){
 <!------check report password---------------------------------->
 <?php 
  include("config.php");
-if(isset($_POST['submit']) && $_POST['submit'] == 'Login')
+if(isset($_POST['submit1']) && $_POST['submit1'] == 'Login1')
 {
-   extract($_POST);
+   extract($_POST); 
    $report_password = md5($report_password);
    $_SESSION['email'] = $email;
                 
-   $sql = mysql_query("select * from patient where report_password='$report_password'");
-  // var_dump($sql);
-   $getRecord = mysql_fetch_array($sql);
-   if(mysql_num_rows($sql) >0) 
+   //$sql = mysql_query("select * from patient where report_password='$report_password'");
+   $sql1 = mysql_query("select * from doctors where email='$email' AND report_password='$report_password'"); 
+   $getRecord = mysql_fetch_array($sql1);
+   //extract($_POST);die;
+   //var_dump($sql);die;
+   //var_dump($_REQUEST);
+   //$getRecord = mysql_fetch_array($sql);
+   if(mysql_num_rows($sql1) >0) 
+   
        { 
    	     //	$_SESSION['email'] = $email;
-                {
-               echo "<script type='text/javascript'>
-	  		window.location.href='show_patient_report.php';
-                            </script>";
-                }
+                
+                 //echo "<script type='text/javascript'>
+	  		//window.location.href='show_patient_report.php';
+                           // </script>";
+       create_session($email,$getRecord['Patient_name'],$getRecord['Patient_id'],'');
+            header("Location: show_patient_report.php");
+            
+
+                
    } else 
        {
-	  echo "<script type='text/javascript'>
-	  alert('Please Enter Correct Login Information');
-	  window.location.href='patient_profile.php';
-	  </script>";   
+       header("Location: patient_profile.php");
+	 // echo "<script type='text/javascript'>
+	 // alert('Please Enter Correct Login Information');
+	  //window.location.href='patient_profile.php';
+	 // </script>";   
    }
 }
 ?>
@@ -86,11 +97,11 @@ if(isset($_POST['submit']) && $_POST['submit'] == 'Login')
     <!------------report list password----------------------------->
     <p><a href="#dialog">List Reports</a>
     <div id="dialog" title="Basic dialog" style="display:none">
-      <form name="login_form" action="" method="post" onsubmit="return check_login();">
+      <form name="login_form" action="<?php echo $site_url.'show_patient_report.php';?>" method="post">
         <div class="input-prepend"> <span class="add-on"><span class="icon-key"></span></span>
-          <input id="password" type="password" placeholder="Enter Password"  name="report_password">
+          <input id="password" required type="password" placeholder="Enter Password"  name="report_password">
         </div>
-        <button class="btn btn-alt btn-primary btn-large btn-block" href="<?php  echo("show_patient_report.php");?> "type="submit" name="submit" value="Login">Go</button>
+        <button class="btn btn-alt btn-primary btn-large btn-block" type="submit" name="submit1" value="Login1">Go</button>
       </form>
     </div>
     </p>
@@ -109,6 +120,7 @@ if(isset($_POST['submit']) && $_POST['submit'] == 'Login')
     <p><a href ="patient_message.php?pid=<?php echo generateRandomString(10).$_SESSION['Patient_id'].generateRandomString(10);?>">MY Messages &nbsp; (<?php echo $data['total'];?>)</a></p>
     <p><a href="prescription_view.php?pid=<?php echo generateRandomString(10).$_SESSION['Patient_id'].generateRandomString(10);?>">MY Prescriptions </a></p>
     <p><a href="logout.php">Logout</a> </p>
+    
     <?php } else if(($_SESSION['Doctors_id'])!= '')
             
            {?>
@@ -123,19 +135,7 @@ if(isset($_POST['submit']) && $_POST['submit'] == 'Login')
     <p> <a href="Registration.php">sign-up</a></p>
     <p> <a href="index.php">Login</a></p>
     <?php  }?>
-    <?php //if(isset($_SESSION['email'])||($_SESSION['email'] != ''))
-                {?>
-    <!--<p> <a href= "doctor_profile.php"> profile</a>
-                    </p>
-                 <p> <a href="javascript:void(0);" onclick="patient();">Patients</a> </p>
-                 <p> <a href="javascript:void(0);" onclick ="appointment();">Appointment</a></p>
-               <p><a href="logout.php">Logout</a> </p>
-            <?php }
-            //else {?>
-            <p>
-                <a href="Registration.php">sign-up</a></p>
-            <p>
-               <a href="index.php">Login</a></p> -->
+    
     
     <div class="separator"></div>
     

@@ -532,8 +532,8 @@ if($_FILES['image']['name'] !='')
  { 
      $active_date = date('Y-m-d H:i:s') ;
      extract($_REQUEST);
-     echo'<pre>';
-     print_r($_REQUEST);
+     //echo'<pre>';
+     //print_r($_REQUEST);
      $fullname = implode($fullname,',');
     
      
@@ -612,8 +612,8 @@ if($_FILES['image']['name'] !='')
            <br><p><b>your precription has been sent on your email </p>
            
            <br><p>Thank You<br>Healthcare Team</p>';
-echo '<pre>';
-  echo $msg2; die;
+//echo '<pre>';
+  //echo $msg2; die;
    //echo$msg3; die;
    mailingNew($patient_details1['email'],$msg2);
    //mailingNew($patient_details1['Phone_NO'].$patient_details1['carrier'],$msg3);
@@ -696,22 +696,16 @@ echo '<pre>';
  /*---------------------------------patient history------------------------------*/
   function patient_history()
  { 
-     
-     
-     $Post_data = array(
-       //'patient_id'=> $_Session['Patient_id'],
-       'medicine'=>$medcine_name,
-        //'disease_id'=>$disease_id,
-         'medcine_color'=>$color,
-          'alleregy'=>$allergy,
+ 	extract($_REQUEST);
+  	$Post_data = array(
+       'patient_id'=> $_SESSION['Patient_id'],
+       'medicine'=>$medicine_name,
+       'disease_id'=>$disease_id,
+       'medcine_color'=>$medicine_color,
+       'alleregy'=>$allergy,
         );
     $rs_patient_history_detail= insert_table('patient_history', $Post_data);
-    $rs_patient_history_detail1 =$rs_patient_history_detail[0]; 
-   echo $rs_patient_history_detail1;
-  //var_dump($_POST); die;
-   //die;
-      
-   
+    	echo 'History Added !..';
  }
 /****************************************************************************************/
  /**********************************Discussion*******************************************/

@@ -1,10 +1,17 @@
 <?php 
+$noRedirect=true;
+session_start();
+if(isset($_SESSION['email']) && !empty($_SESSION['email'])){ 
+	header('Location:patient_profile.php');
+}
 include("config.php");
+
 //print_r($_SESSION);
 
 if(isset($_POST['submit']) && $_POST['submit'] == 'Login')
 {
    extract($_POST);
+   
    $password = md5($password);
    //print_r($_SESSION);
    //echo "select * from doctors where email='$email' AND password='$password'"; 

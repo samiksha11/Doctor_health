@@ -17,7 +17,7 @@ $rs_medicine_detail = getAllDataFromTable('medicine',array('medicine`.`medicine_
 $get_medicine_detail = $rs_medicine_detail[0];
 
 if(isset($_POST['submit']) && $_POST['submit'] == 'Save History'){ 
-	// var_dump($_POST); die;
+	 //var_dump($_POST); die;
        patient_history();
 }
 ?>

@@ -9,7 +9,7 @@ ini_set("session.gc_maxlifetime",10);
 session_regenerate_id(true);
 
 $new_sessionid = session_id();
-/*$timeStamp=time();
+$timeStamp=time();
 if($noRedirect){
 }else{
 	if(!(isset($_SESSION['email']) && !empty($_SESSION['email']))){ 
@@ -26,7 +26,7 @@ if($noRedirect){
 
  $_SESSION['timestamp']=$timeStamp;
 //echo "Old Session: $old_sessionid<br />";
-//echo "New Session: $new_sessionid<br />";*/
+//echo "New Session: $new_sessionid<br />";
 
 //print_r($_SESSION);
 if ($_SERVER['HTTP_HOST']=='localhost')

@@ -11,19 +11,21 @@ if($_REQUEST['chk'] == 'doctor'){
 }else if($_REQUEST['chk'] == 'patient'){
 	$sql = mysql_query("SELECT * FROM `patient` WHERE `activate_code` = '".$_REQUEST['err']."'");
 	$getId = mysql_fetch_object($sql);
+        
 	if(mysql_num_rows($sql) > 0){
-            
 		$list_pass = generateRandomString('6') ; 
 		$Emailmsg = '<body bgcolor="F4F4F4"><div style="font-size:20px;text-align:center;background-color:#1E599C;color:#ffffff;">Welcome To HealthCare</div></p><br><br><p><b> Your Account is Activate Now </p><br><br>
 		<p>Your List Reports Password :- '.$list_pass.', Help to see your all reports </p><br><br>
 		<p>Thank You<br>Healthcare Team</p></body>';
-		
+		        //echo '<pre>';
+  // echo $Emailmsg;
+   
+   //die();
 			$msg = "Your Account Now Activated. <br><br>Please <a href='$siteUrl'> Click Here </a> To Login";
 			
 			mailingNew($getId->email, $Emailmsg);
-	
-    update_table('patient',array('activate_code'=>'','Online_status'=>'Active'),array('Patient_id'=>$getId->Patient_id));
-  //  header("Location:".$siteUrl);
+			
+			update_table('patient',array('activate_code'=>'','report_password'=>md5($list_pass),'Online_status'=>'Active'),array('Patient_id'=>$getId->Patient_id));
 }}else{
 	header("Location:".$siteUrl);
 }

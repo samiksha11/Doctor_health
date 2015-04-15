@@ -1,4 +1,5 @@
 <?php 
+$noRedirect=true;
 include_once("config.php");
 
 
